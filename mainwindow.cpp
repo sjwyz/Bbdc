@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     xl=new QStringList();
     xlm=new QStringListModel(this);
     xl_base=new QStringList();
-    QFile file("eg.csv");
+    QFile file("../eg.csv");
     file.open(QIODevice::ReadOnly);
     while(!file.atEnd())
     {
@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
         }*/
         *sl<<arr.data();
     }
+    file.close();
     *sl_base=*sl;
     *xl_base=*xl;
     slm->setStringList(*sl);
