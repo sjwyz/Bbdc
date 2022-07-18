@@ -12,24 +12,35 @@ MainWindow::MainWindow(QWidget *parent)
     xl=new QStringList();
     xlm=new QStringListModel(this);
     xl_base=new QStringList();
-    QFile file("../eg.csv");
-    file.open(QIODevice::ReadOnly);
-    while(!file.atEnd())
+    sqlitedb=new sqlitetool();
+    if(sqlitedb->isdbexist()==false)
     {
-        QByteArray arr=file.readLine();
-        int arrlen=arr.size();
-        if(arr[arrlen-1]=='\n')
-            arr[arrlen-1]='\0';
-        /*int i=0;
-        while(i<arrlen)
+        QFile file("../eg.csv");
+        file.open(QIODevice::ReadOnly);
+        while(!file.atEnd())
         {
-            if(arr[i]==',')
-                arr[i]='\n';
-            i++;
-        }*/
-        *sl<<arr.data();
+            QByteArray arr=file.readLine();
+            int arrlen=arr.size();
+            if(arr[arrlen-1]=='\n')
+                arr[arrlen-1]='\0';
+            /*int i=0;
+            while(i<arrlen)
+            {
+                if(arr[i]==',')
+                    arr[i]='\n';
+                i++;
+            }*/
+            *sl<<arr.data();
+            sqlitedb->pushinsertcmd(arr.data());
+        }
+        sqlitedb->insertexec();
+        sqlitedb->updatedbexist();
+        file.close();
     }
-    file.close();
+    else
+    {
+
+    }
     *sl_base=*sl;
     *xl_base=*xl;
     slm->setStringList(*sl);

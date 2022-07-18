@@ -20,6 +20,8 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        sqlitetool.cpp
+        sqlitetool.h
         mainwindow.ui
         ${TS_FILES}
 )
@@ -51,7 +53,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(test PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(test PRIVATE Qt${QT_VERSION_MAJOR}::Widgets sqlite3)
 
 set_target_properties(test PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
